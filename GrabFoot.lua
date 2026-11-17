@@ -201,7 +201,7 @@ local hit=workspace:Blockcast(CN(from)*W.Rotation,V3(1.3,1.6,0.6),dir*yaq,rp)
 if hit then yaq=mX((hit.Position-from).Magnitude-0.25,0) end
 f.obj=nil
 local o=hit and hit.Instance
-if o and not o.Anchored and o.AssemblyMass<300 and not o.Parent:FindFirstChildOfClass("Humanoid") then f.obj=o end
+if o and yaq>1.5 and not o.Anchored and o.AssemblyMass<300 and not o.Parent:FindFirstChildOfClass("Humanoid") then f.obj=o end
 f.start=CN(from)*W.Rotation
 f.goal=CN(from+dir*yaq)*W.Rotation
 f.dur=mC(yaq/yay,0.12,1.2)
@@ -245,7 +245,7 @@ tp=f.pt<.3
 f.pt=nil
 end
 if o and f.off then cur=o.CFrame*f.off f.goal=cur end
-if f.t>=0.4 and (tp or not(o and o.Parent)) then
+if f.t>=0.4 and (tp or not(o and o.Parent and (o.Position-cam.CFrame.Position).Magnitude<90)) then
 f.state="back"
 sfx(zm)
 f.t=0
@@ -749,8 +749,4 @@ S.ps:Destroy()
 pcall(yad,false)
 zs:Disconnect()
 if zz and cam then cam.FieldOfView=zz end
-pcall(function() lp.Character:FindFirstChildOfClass("Humanoid").CameraOffset=V3(0,0,0) end)
-vm:Destroy()
-gui:Destroy()
-_G.GFStop=nil
-end
+pcall(function() lp.Character:FindFirstChildOfClass("Humanoid").CameraOffset=V3(0,0,0) 
